@@ -43,13 +43,22 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 py-12 border-b border-white/5">
           {/* Brand Col (5 cols) */}
           <div className="md:col-span-5 flex flex-col items-start">
-            <div className="flex items-center gap-2.5 mb-3">
-              <span className="w-8 h-8 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center font-bold text-white font-mono text-sm">
-                {PERSONAL_INFO.initials}
-              </span>
-              <span className="font-bold text-lg text-white tracking-tight">
-                {PERSONAL_INFO.name}
-              </span>
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-xl overflow-hidden border border-white/20 shrink-0 bg-[#12141C]">
+                <img
+                  src={PERSONAL_INFO.profileImage}
+                  alt={PERSONAL_INFO.name}
+                  className="w-full h-full object-cover object-top filter contrast-[1.05]"
+                />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-bold text-base text-white tracking-tight leading-none">
+                  {PERSONAL_INFO.name}
+                </span>
+                <span className="text-[10px] text-slate-400 font-mono tracking-wider mt-1">
+                  SL-TECHCO · SL-DESIGN
+                </span>
+              </div>
             </div>
             <p className="text-xs sm:text-sm text-slate-400 font-light max-w-sm mb-4 leading-relaxed">
               {PERSONAL_INFO.brandTagline}

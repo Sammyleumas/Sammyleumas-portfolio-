@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'motion/react';
 import { Mail, Phone, MapPin, Copy, Check, Send, CheckCircle2, AlertCircle, RefreshCw, ExternalLink } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
@@ -93,12 +94,18 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ prefillService }
   };
 
   return (
-    <section id="contact" className="relative w-full py-24 sm:py-32 px-5 sm:px-8 md:px-12 bg-[#0A0B10] border-t border-white/5">
+    <section id="contact" className="relative w-full py-24 sm:py-32 px-5 sm:px-8 md:px-12 bg-[#0A0B10] border-t border-white/5 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-16"
+        >
           <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#38BDF8] mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] animate-pulse" />
             <span>CONTACT &amp; COLLABORATION</span>
           </div>
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white editorial-title">
@@ -107,15 +114,28 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ prefillService }
           <p className="text-sm sm:text-base text-slate-300 font-light max-w-2xl mt-3 leading-relaxed">
             Have a project, collaboration, or opportunity in mind? Tell me what you&apos;re working on.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Direct Contact Details & Brand Confidence (5 cols) */}
           <div className="lg:col-span-5 flex flex-col gap-6">
             <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-white/[0.05] to-transparent border border-white/10 shadow-xl backdrop-blur-sm">
-              <span className="text-xs font-mono uppercase tracking-wider text-slate-400 block mb-2 font-semibold">
-                Direct Channels
-              </span>
+              <div className="flex items-center gap-3.5 mb-6 pb-4 border-b border-white/10">
+                <div className="w-12 h-12 rounded-xl overflow-hidden border border-white/20 shrink-0 bg-[#12141C]">
+                  <img
+                    src={PERSONAL_INFO.profileImage}
+                    alt={PERSONAL_INFO.name}
+                    className="w-full h-full object-cover object-top filter contrast-[1.05]"
+                  />
+                </div>
+                <div>
+                  <span className="text-xs font-mono uppercase tracking-wider text-slate-400 block font-semibold">
+                    Direct Channels
+                  </span>
+                  <div className="text-sm font-bold text-white">Sammy Leumas</div>
+                </div>
+              </div>
+
               <p className="text-xs sm:text-sm text-slate-300 font-light mb-6">
                 You can reach Sammy Leumas directly via email, phone, or schedule a virtual discovery sprint.
               </p>

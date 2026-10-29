@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { X, ArrowRight, ExternalLink, Check, Sparkles, Layers, Cpu } from 'lucide-react';
 import { Project, PROJECTS } from '../data/portfolioData';
 import InteractiveRacerDemo from './InteractiveRacerDemo';
@@ -18,25 +19,35 @@ export const ProjectCaseStudyModal: React.FC<ProjectCaseStudyModalProps> = ({
 }) => {
   const [activeImageIdx, setActiveImageIdx] = useState(0);
 
-  if (!project) return null;
+  const caseStudy = project?.caseStudy;
+  const allImages = project
+    ? [
+        { title: 'Primary Overview', url: project.coverImage, caption: project.tagline },
+        ...project.additionalImages,
+      ]
+    : [];
 
-  const { caseStudy } = project;
-  const allImages = [
-    { title: 'Primary Overview', url: project.coverImage, caption: project.tagline },
-    ...project.additionalImages,
-  ];
-
-  const otherProjects = PROJECTS.filter((p) => p.id !== project.id);
+  const otherProjects = project ? PROJECTS.filter((p) => p.id !== project.id) : [];
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-xl animate-in fade-in duration-200"
-      onClick={onClose}
-    >
-      <div
-        className="relative w-full max-w-5xl bg-[#0D0F17] border border-white/15 rounded-3xl p-5 sm:p-8 md:p-10 text-slate-200 max-h-[94vh] overflow-y-auto shadow-[0_25px_90px_rgba(0,0,0,0.95)]"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <AnimatePresence>
+      {project && caseStudy && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-xl"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94, y: 25 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.94, y: 25 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full max-w-5xl bg-[#0D0F17] border border-white/15 rounded-3xl p-5 sm:p-8 md:p-10 text-slate-200 max-h-[94vh] overflow-y-auto shadow-[0_25px_90px_rgba(0,0,0,0.95)]"
+            onClick={(e) => e.stopPropagation()}
+          >
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -325,9 +336,11 @@ export const ProjectCaseStudyModal: React.FC<ProjectCaseStudyModalProps> = ({
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  );
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
+);
 };
 
 export default ProjectCaseStudyModal;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { X, Clock, Calendar, ArrowRight, Share2, Check, ArrowLeft } from 'lucide-react';
 import { Article } from '../data/portfolioData';
 
@@ -15,8 +16,6 @@ export const ArticleModal: React.FC<ArticleModalProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
 
-  if (!article) return null;
-
   const handleShare = () => {
     if (navigator.clipboard) {
       navigator.clipboard.writeText(window.location.href);
@@ -26,14 +25,24 @@ export const ArticleModal: React.FC<ArticleModalProps> = ({
   };
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-xl animate-in fade-in duration-200"
-      onClick={onClose}
-    >
-      <div
-        className="relative w-full max-w-4xl bg-[#0D0F17] border border-white/15 rounded-3xl p-6 sm:p-10 text-slate-200 max-h-[94vh] overflow-y-auto shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <AnimatePresence>
+      {article && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-xl"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.94, y: 20 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full max-w-4xl bg-[#0D0F17] border border-white/15 rounded-3xl p-6 sm:p-10 text-slate-200 max-h-[94vh] overflow-y-auto shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -153,10 +162,12 @@ export const ArticleModal: React.FC<ArticleModalProps> = ({
             <span>Start a Conversation</span>
             <ArrowRight className="w-4 h-4" />
           </button>
-        </div>
-      </div>
-    </div>
-  );
+          </div>
+        </motion.div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+);
 };
 
 export default ArticleModal;

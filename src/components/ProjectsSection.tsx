@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { ArrowUpRight, Sparkles, Gamepad2, Smartphone, LayoutGrid, ExternalLink } from 'lucide-react';
 import { Project, PROJECTS } from '../data/portfolioData';
 
@@ -24,10 +25,16 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
     <section id="work" className="relative w-full py-24 sm:py-32 px-5 sm:px-8 md:px-12 bg-[#0A0B10]">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-8 border-b border-white/10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-8 border-b border-white/10"
+        >
           <div>
             <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#38BDF8] mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] animate-pulse" />
               <span>SELECTED PROJECTS</span>
             </div>
             <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white editorial-title">
@@ -43,7 +50,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
             <button
               type="button"
               onClick={() => setFilter('all')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all duration-300 cursor-pointer ${
                 filter === 'all'
                   ? 'bg-white text-slate-900 font-semibold shadow-sm'
                   : 'text-slate-400 hover:text-white'
@@ -54,7 +61,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
             <button
               type="button"
               onClick={() => setFilter('saas')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all duration-300 cursor-pointer ${
                 filter === 'saas'
                   ? 'bg-white text-slate-900 font-semibold shadow-sm'
                   : 'text-slate-400 hover:text-white'
@@ -65,7 +72,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
             <button
               type="button"
               onClick={() => setFilter('mobile')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all duration-300 cursor-pointer ${
                 filter === 'mobile'
                   ? 'bg-white text-slate-900 font-semibold shadow-sm'
                   : 'text-slate-400 hover:text-white'
@@ -76,7 +83,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
             <button
               type="button"
               onClick={() => setFilter('game')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all duration-300 cursor-pointer ${
                 filter === 'game'
                   ? 'bg-white text-slate-900 font-semibold shadow-sm'
                   : 'text-slate-400 hover:text-white'
@@ -85,18 +92,25 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
               3D & WebGL
             </button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Editorial Project Showcase Grid */}
         <div className="flex flex-col gap-14 sm:gap-20">
-          {filteredProjects.map((project, index) => {
-            const isReversed = index % 2 === 1;
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, index) => {
+              const isReversed = index % 2 === 1;
 
-            return (
-              <div
-                key={project.id}
-                className="group relative rounded-3xl bg-gradient-to-b from-white/[0.05] to-transparent border border-white/10 hover:border-white/20 transition-all duration-300 p-6 sm:p-8 lg:p-10 shadow-2xl backdrop-blur-sm"
-              >
+              return (
+                <motion.div
+                  layout
+                  initial={{ opacity: 0, y: 35 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                  key={project.id}
+                  className="group relative rounded-3xl bg-gradient-to-b from-white/[0.05] to-transparent border border-white/10 hover:border-white/20 transition-all duration-500 p-6 sm:p-8 lg:p-10 shadow-2xl backdrop-blur-sm"
+                >
                 <div
                   className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center ${
                     isReversed ? 'lg:flex-row-reverse' : ''
@@ -204,9 +218,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
+          </AnimatePresence>
         </div>
       </div>
     </section>

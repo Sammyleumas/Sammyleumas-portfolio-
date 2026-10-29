@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { motion } from 'motion/react';
 import {
   ArrowUpRight,
   Code2,
@@ -87,10 +88,16 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenContact 
 
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16 pb-8 border-b border-white/10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16 pb-8 border-b border-white/10"
+        >
           <div>
             <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#38BDF8] mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] animate-pulse" />
               <span>SERVICES &amp; EXPERTISE · 3D CAROUSEL</span>
             </div>
             <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white editorial-title">
@@ -141,7 +148,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenContact 
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* 3D Carousel Stage */}
         <div

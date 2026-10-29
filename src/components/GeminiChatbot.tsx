@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import {
   MessageSquare,
   X,
@@ -17,6 +18,7 @@ import {
   Check,
   RefreshCw,
 } from 'lucide-react';
+import { PERSONAL_INFO } from '../data/portfolioData';
 
 interface ChatMessage {
   id: string;
@@ -154,52 +156,70 @@ export const GeminiChatbot: React.FC<GeminiChatbotProps> = ({
     'How do SL-TECHCO and SL-DESIGN collaborate?',
   ];
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/75 backdrop-blur-md animate-in fade-in duration-200">
-      <div
-        className="relative w-full max-w-xl h-[88vh] sm:h-[680px] bg-[#0E1018] border border-white/15 rounded-t-3xl sm:rounded-3xl flex flex-col shadow-[0_25px_80px_rgba(0,0,0,0.95)] overflow-hidden"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Header */}
-        <div className="px-5 py-4 bg-[#131622] border-b border-white/10 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#38BDF8]/10 border border-[#38BDF8]/30 flex items-center justify-center text-[#38BDF8]">
-              <Sparkles className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-bold text-sm text-white">Sammy&apos;s Studio Copilot</span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#38BDF8]/15 text-[#38BDF8] border border-[#38BDF8]/30">
-                  Gemini AI
-                </span>
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94, y: 25 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.94, y: 25 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full max-w-xl h-[88vh] sm:h-[680px] bg-[#0E1018] border border-white/15 rounded-t-3xl sm:rounded-3xl flex flex-col shadow-[0_25px_80px_rgba(0,0,0,0.95)] overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="px-5 py-4 bg-[#131622] border-b border-white/10 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="relative w-10 h-10 rounded-xl overflow-hidden border border-white/20 shrink-0 bg-[#12141C]">
+                  <img
+                    src={PERSONAL_INFO.profileImage}
+                    alt={PERSONAL_INFO.name}
+                    className="w-full h-full object-cover object-top filter contrast-[1.05]"
+                  />
+                  <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-sky-500 border-2 border-[#131622] flex items-center justify-center">
+                    <Sparkles className="w-2 h-2 text-white" />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-sm text-white">Sammy&apos;s Studio Copilot</span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#38BDF8]/15 text-[#38BDF8] border border-[#38BDF8]/30">
+                      Gemini AI
+                    </span>
+                  </div>
+                  <span className="text-[11px] text-slate-400 font-mono">
+                    Multi-Turn Creative &amp; Technical Assistant
+                  </span>
+                </div>
               </div>
-              <span className="text-[11px] text-slate-400 font-mono">
-                Multi-Turn Creative &amp; Technical Assistant
-              </span>
-            </div>
-          </div>
 
-          <div className="flex items-center gap-1.5">
-            <button
-              type="button"
-              onClick={clearChat}
-              title="Reset Conversation"
-              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-            >
-              <Trash2 className="w-4 h-4" />
-            </button>
-            <button
-              type="button"
-              onClick={onClose}
-              title="Close Chat"
-              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={clearChat}
+                  title="Reset Conversation"
+                  className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  title="Close Chat"
+                  className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
 
         {/* Model Selector Bar */}
         <div className="px-4 py-2.5 bg-[#0A0C13] border-b border-white/5 flex items-center justify-between text-xs font-mono">
@@ -413,9 +433,11 @@ export const GeminiChatbot: React.FC<GeminiChatbotProps> = ({
             </button>
           </div>
         </div>
-      </div>
-    </div>
-  );
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
+);
 };
 
 export default GeminiChatbot;

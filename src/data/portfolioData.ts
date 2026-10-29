@@ -72,6 +72,7 @@ export const PERSONAL_INFO = {
   },
   studioAffiliations: ['SL-TECHCO', 'SL-DESIGN'],
   location: 'Remote · Worldwide Availability',
+  profileImage: '/assets/aistudio/20261011_042051_aa2f4ffd.jpg',
 };
 
 export const PHILOSOPHY_PRINCIPLES = [

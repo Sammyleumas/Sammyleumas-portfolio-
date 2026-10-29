@@ -7,6 +7,11 @@
     padding: 0;
   }
 
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+
   html,
   body,
   #root {
@@ -15,6 +20,15 @@
     color: #E2E8F0;
     min-height: 100%;
     overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Smooth focus ring */
+  :focus-visible {
+    outline: 2px solid #38BDF8;
+    outline-offset: 2px;
+    transition: outline-offset 200ms ease;
   }
 }
 
@@ -29,9 +43,10 @@
 ::-webkit-scrollbar-thumb {
   background: #1E293B;
   border-radius: 9999px;
+  transition: background 250ms ease;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #38BDF8;
 }
 
 /* Fluid typography and subtle ambient glow utilities */
@@ -43,4 +58,26 @@
 .mono-tag {
   font-family: 'JetBrains Mono', monospace;
   font-feature-settings: 'tnum' on, 'zero' on;
+}
+
+/* Smooth transition utility classes */
+.ease-out-expo {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ease-in-out-cubic {
+  transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@keyframes float-subtle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-float-subtle {
+  animation: float-subtle 5s ease-in-out infinite;
 }
