@@ -1,0 +1,8 @@
+{
+  "name": "Jack -- 3D Creator",
+  "description": "Personal portfolio of Sammy Leumas, creative technologist, web developer, and digital designer featuring 3D carousels, live web applications, and an interactive Gemini studio copilot.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

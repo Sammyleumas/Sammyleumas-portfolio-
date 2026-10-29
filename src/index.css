@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@layer base {
+  *, ::before, ::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html,
+  body,
+  #root {
+    background-color: #0A0B10;
+    font-family: 'Satoshi', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: #E2E8F0;
+    min-height: 100%;
+    overflow-x: clip;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0B10;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E293B;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Fluid typography and subtle ambient glow utilities */
+.editorial-title {
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.mono-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-feature-settings: 'tnum' on, 'zero' on;
+}
