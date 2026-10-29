@@ -32,7 +32,6 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenContact 
     setActiveIndex((prev) => (prev - 1 + total) % total);
   };
 
-  // Autoplay effect
   useEffect(() => {
     if (!isAutoPlaying) return;
     const interval = setInterval(() => {
@@ -41,7 +40,6 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenContact 
     return () => clearInterval(interval);
   }, [isAutoPlaying, activeIndex]);
 
-  // Touch gesture handlers
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
   };
@@ -63,48 +61,59 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenContact 
   const getIcon = (iconName: string) => {
     switch (iconName) {
       case 'Code2':
-        return <Code2 className="w-6 h-6 text-[#38BDF8]" />;
+        return <Code2 className="w-6 h-6" style={{ color: 'var(--primary-accent)' }} />;
       case 'Layout':
-        return <Layout className="w-6 h-6 text-[#818CF8]" />;
+        return <Layout className="w-6 h-6" style={{ color: 'var(--accent-hover)' }} />;
       case 'Palette':
-        return <Palette className="w-6 h-6 text-[#F43F5E]" />;
+        return <Palette className="w-6 h-6" style={{ color: 'var(--primary-accent)' }} />;
       case 'Sparkles':
-        return <Sparkles className="w-6 h-6 text-amber-400" />;
+        return <Sparkles className="w-6 h-6 text-amber-500" />;
       default:
-        return <Code2 className="w-6 h-6 text-white" />;
+        return <Code2 className="w-6 h-6" style={{ color: 'var(--primary-accent)' }} />;
     }
   };
 
   return (
     <section
       id="services"
-      className="relative w-full py-24 sm:py-32 px-5 sm:px-8 md:px-12 bg-[#0A0B10] border-t border-white/5 overflow-hidden select-none"
+      className="relative w-full py-24 sm:py-32 px-5 sm:px-8 md:px-12 border-t overflow-hidden select-none transition-colors"
+      style={{
+        backgroundColor: 'var(--bg-page)',
+        borderColor: 'var(--border-color)',
+      }}
     >
-      {/* Background ambient lighting */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[25rem] bg-[#38BDF8]/5 rounded-full blur-3xl pointer-events-none -z-10"
-        aria-hidden="true"
-      />
-
       <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
+        {/* Section Header with BIG FONT */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16 pb-8 border-b border-white/10"
+          transition={{ duration: 0.75, ease: 'easeOut' }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16 pb-8 border-b"
+          style={{ borderColor: 'var(--border-color)' }}
         >
           <div>
-            <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#38BDF8] mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] animate-pulse" />
-              <span>SERVICES &amp; EXPERTISE · 3D CAROUSEL</span>
+            <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider mb-3 font-bold">
+              <span
+                className="w-2 h-2 rounded-full animate-pulse"
+                style={{ backgroundColor: 'var(--primary-accent)' }}
+              />
+              <span style={{ color: 'var(--primary-accent)' }}>
+                SERVICES &amp; EXPERTISE · 3D CAROUSEL
+              </span>
             </div>
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white editorial-title">
+            {/* BIG FONT FOR SECTION */}
+            <h2
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight big-section-title"
+              style={{ color: 'var(--text-primary)' }}
+            >
               Creative solutions, built around your goals.
             </h2>
-            <p className="text-sm sm:text-base text-slate-300 font-light max-w-2xl mt-3 leading-relaxed">
-              Every offering is tailored to deliver measurable utility, exceptional visual polish, and clean production architecture.
+            <p
+              className="text-base sm:text-lg font-normal max-w-2xl mt-4 leading-relaxed"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              Every offering is engineered to deliver measurable utility, distinct visual polish, and resilient production code.
             </p>
           </div>
 
@@ -113,17 +122,22 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenContact 
             <button
               type="button"
               onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-              className="px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 hover:bg-white/10 text-xs font-mono text-slate-300 flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="px-3.5 py-2 rounded-xl border text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer"
+              style={{
+                backgroundColor: 'var(--surface-secondary)',
+                borderColor: 'var(--border-color)',
+                color: 'var(--text-secondary)',
+              }}
               aria-label="Toggle Autoplay"
             >
               {isAutoPlaying ? (
                 <>
-                  <Pause className="w-3.5 h-3.5 text-[#38BDF8]" />
+                  <Pause className="w-3.5 h-3.5" style={{ color: 'var(--primary-accent)' }} />
                   <span className="hidden sm:inline">Pause</span>
                 </>
               ) : (
                 <>
-                  <Play className="w-3.5 h-3.5 text-slate-400" />
+                  <Play className="w-3.5 h-3.5" />
                   <span className="hidden sm:inline">Auto</span>
                 </>
               )}
@@ -133,7 +147,12 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenContact 
               <button
                 type="button"
                 onClick={prevSlide}
-                className="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/10 hover:bg-white/15 text-slate-200 hover:text-white flex items-center justify-center transition-all cursor-pointer active:scale-95 focus-visible:outline-2 focus-visible:outline-[#38BDF8]"
+                className="w-10 h-10 rounded-xl border flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-sm"
+                style={{
+                  backgroundColor: 'var(--surface-card)',
+                  borderColor: 'var(--border-color)',
+                  color: 'var(--text-primary)',
+                }}
                 aria-label="Previous Service"
               >
                 <ChevronLeft className="w-5 h-5" />
@@ -141,7 +160,12 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenContact 
               <button
                 type="button"
                 onClick={nextSlide}
-                className="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/10 hover:bg-white/15 text-slate-200 hover:text-white flex items-center justify-center transition-all cursor-pointer active:scale-95 focus-visible:outline-2 focus-visible:outline-[#38BDF8]"
+                className="w-10 h-10 rounded-xl border flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-sm"
+                style={{
+                  backgroundColor: 'var(--surface-card)',
+                  borderColor: 'var(--border-color)',
+                  color: 'var(--text-primary)',
+                }}
                 aria-label="Next Service"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -160,7 +184,6 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenContact 
           onMouseLeave={() => setIsAutoPlaying(true)}
         >
           {SERVICES.map((service: Service, index: number) => {
-            // Calculate shortest signed distance on the ring [-2, -1, 0, 1, 2]
             let offset = index - activeIndex;
             if (offset > total / 2) offset -= total;
             if (offset < -total / 2) offset += total;
@@ -170,7 +193,6 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenContact 
             const isLeft = offset === -1;
             const isBack = Math.abs(offset) >= 2;
 
-            // 3D positioning transforms
             let transform = 'translate3d(0, 0, -400px) scale(0.65)';
             let opacity = 0;
             let zIndex = 5;
@@ -223,61 +245,103 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenContact 
                 }}
               >
                 <div
-                  className={`p-6 sm:p-8 md:p-10 rounded-3xl bg-gradient-to-b from-[#141824]/95 to-[#0D101A]/95 border ${
-                    isCenter
-                      ? 'border-[#38BDF8]/40 shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(56,189,248,0.15)] ring-1 ring-[#38BDF8]/20'
-                      : 'border-white/10 shadow-xl'
-                  } backdrop-blur-xl flex flex-col justify-between h-[520px] sm:h-[550px] md:h-[580px]`}
+                  className="p-6 sm:p-8 md:p-10 rounded-3xl border backdrop-blur-xl flex flex-col justify-between h-[520px] sm:h-[550px] md:h-[580px]"
+                  style={{
+                    backgroundColor: 'var(--surface-card)',
+                    borderColor: isCenter ? 'var(--primary-accent)' : 'var(--border-color)',
+                    boxShadow: isCenter ? 'var(--card-shadow)' : 'none',
+                  }}
                 >
                   <div>
                     {/* Header with Number and Icon */}
-                    <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
-                      <div className="w-12 h-12 rounded-2xl bg-white/[0.06] border border-white/10 flex items-center justify-center">
+                    <div
+                      className="flex items-center justify-between mb-6 pb-4 border-b"
+                      style={{ borderColor: 'var(--border-color)' }}
+                    >
+                      <div
+                        className="w-12 h-12 rounded-2xl border flex items-center justify-center shadow-inner"
+                        style={{
+                          backgroundColor: 'var(--surface-secondary)',
+                          borderColor: 'var(--border-color)',
+                        }}
+                      >
                         {getIcon(service.icon)}
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs text-[#38BDF8] font-semibold uppercase tracking-wider">
+                        <span
+                          className="font-mono text-xs font-bold uppercase tracking-wider"
+                          style={{ color: 'var(--primary-accent)' }}
+                        >
                           SERVICE
                         </span>
-                        <span className="font-mono text-base font-bold text-white">
+                        <span
+                          className="font-mono text-base font-black px-2 py-0.5 rounded-md"
+                          style={{
+                            backgroundColor: 'var(--surface-secondary)',
+                            color: 'var(--primary-accent)',
+                          }}
+                        >
                           {service.number}
                         </span>
                       </div>
                     </div>
 
                     {/* Service Title */}
-                    <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 tracking-tight">
+                    <h3
+                      className="text-2xl sm:text-3xl font-black mb-3 tracking-tight"
+                      style={{ color: 'var(--text-primary)' }}
+                    >
                       {service.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed mb-6">
+                    <p
+                      className="text-xs sm:text-sm font-normal leading-relaxed mb-6"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
                       {service.description}
                     </p>
 
                     {/* Deliverables Checklist */}
-                    <div className="space-y-2.5 mb-6 pt-4 border-t border-white/5">
-                      <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 block mb-2 font-medium">
+                    <div
+                      className="space-y-2.5 mb-6 pt-4 border-t"
+                      style={{ borderColor: 'var(--border-color)' }}
+                    >
+                      <span
+                        className="text-[11px] font-mono uppercase tracking-wider block mb-2 font-bold"
+                        style={{ color: 'var(--text-secondary)' }}
+                      >
                         What this offering encompasses:
                       </span>
                       {service.offerings.map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-slate-300">
-                          <Check className="w-3.5 h-3.5 text-[#38BDF8] shrink-0" />
-                          <span className="line-clamp-1">{item}</span>
+                        <div key={idx} className="flex items-center gap-2 text-xs">
+                          <Check
+                            className="w-3.5 h-3.5 shrink-0"
+                            style={{ color: 'var(--color-success)' }}
+                          />
+                          <span
+                            className="line-clamp-1 font-medium"
+                            style={{ color: 'var(--text-primary)' }}
+                          >
+                            {item}
+                          </span>
                         </div>
                       ))}
                     </div>
                   </div>
 
                   {/* Functional CTA Button */}
-                  <div className="pt-4 border-t border-white/10">
+                  <div className="pt-4 border-t" style={{ borderColor: 'var(--border-color)' }}>
                     <button
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
                         onOpenContact(service.title);
                       }}
-                      className="w-full py-3.5 px-5 rounded-2xl bg-white text-slate-900 hover:bg-slate-200 active:scale-95 font-semibold text-xs uppercase tracking-wider transition-all duration-200 flex items-center justify-between cursor-pointer shadow-md"
+                      className="w-full py-3.5 px-5 rounded-2xl text-white font-bold text-xs uppercase tracking-wider transition-all duration-200 flex items-center justify-between cursor-pointer shadow-md hover:scale-[1.01] active:scale-95"
+                      style={{ backgroundColor: 'var(--primary-accent)' }}
+                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--accent-hover)')}
+                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'var(--primary-accent)')}
                     >
                       <span>Discuss a Project in {service.title.split(' ')[0]}</span>
                       <ArrowUpRight className="w-4 h-4" />
@@ -297,16 +361,16 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenContact 
                 key={idx}
                 type="button"
                 onClick={() => setActiveIndex(idx)}
-                className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                  activeIndex === idx
-                    ? 'w-8 bg-[#38BDF8]'
-                    : 'w-2 bg-white/20 hover:bg-white/40'
-                }`}
+                className="h-2 rounded-full transition-all duration-300 cursor-pointer"
+                style={{
+                  width: activeIndex === idx ? '32px' : '8px',
+                  backgroundColor: activeIndex === idx ? 'var(--primary-accent)' : 'var(--border-color)',
+                }}
                 aria-label={`Go to slide ${idx + 1}`}
               />
             ))}
           </div>
-          <div className="font-mono text-xs text-slate-500">
+          <div className="font-mono text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>
             0{activeIndex + 1} / 0{total} · Click flanking cards or swipe to rotate
           </div>
         </div>

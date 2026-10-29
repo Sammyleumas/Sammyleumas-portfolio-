@@ -65,7 +65,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ prefillService }
 
     setIsLoading(true);
 
-    // Simulate reliable dispatch & generate fallback mailto link
     try {
       await new Promise((resolve) => setTimeout(resolve, 800));
       setIsLoading(false);
@@ -94,34 +93,68 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ prefillService }
   };
 
   return (
-    <section id="contact" className="relative w-full py-24 sm:py-32 px-5 sm:px-8 md:px-12 bg-[#0A0B10] border-t border-white/5 overflow-hidden">
+    <section
+      id="contact"
+      className="relative w-full py-24 sm:py-32 px-5 sm:px-8 md:px-12 border-t overflow-hidden transition-colors"
+      style={{
+        backgroundColor: 'var(--bg-page)',
+        borderColor: 'var(--border-color)',
+      }}
+    >
       <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
+        {/* Section Header with BIG FONT */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-16"
+          transition={{ duration: 0.75, ease: 'easeOut' }}
+          className="mb-16 pb-8 border-b"
+          style={{ borderColor: 'var(--border-color)' }}
         >
-          <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#38BDF8] mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] animate-pulse" />
-            <span>CONTACT &amp; COLLABORATION</span>
+          <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider mb-3 font-bold">
+            <span
+              className="w-2 h-2 rounded-full animate-pulse"
+              style={{ backgroundColor: 'var(--primary-accent)' }}
+            />
+            <span style={{ color: 'var(--primary-accent)' }}>CONTACT &amp; COLLABORATION</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white editorial-title">
+          {/* BIG FONT FOR SECTION */}
+          <h2
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight big-section-title"
+            style={{ color: 'var(--text-primary)' }}
+          >
             Let&apos;s build something meaningful.
           </h2>
-          <p className="text-sm sm:text-base text-slate-300 font-light max-w-2xl mt-3 leading-relaxed">
+          <p
+            className="text-base sm:text-lg font-normal max-w-2xl mt-4 leading-relaxed"
+            style={{ color: 'var(--text-secondary)' }}
+          >
             Have a project, collaboration, or opportunity in mind? Tell me what you&apos;re working on.
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Left Column: Direct Contact Details & Brand Confidence (5 cols) */}
+          {/* Left Column: Direct Contact Details (5 cols) */}
           <div className="lg:col-span-5 flex flex-col gap-6">
-            <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-white/[0.05] to-transparent border border-white/10 shadow-xl backdrop-blur-sm">
-              <div className="flex items-center gap-3.5 mb-6 pb-4 border-b border-white/10">
-                <div className="w-12 h-12 rounded-xl overflow-hidden border border-white/20 shrink-0 bg-[#12141C]">
+            <div
+              className="p-6 sm:p-8 rounded-3xl border shadow-xl"
+              style={{
+                backgroundColor: 'var(--surface-card)',
+                borderColor: 'var(--border-color)',
+                boxShadow: 'var(--card-shadow)',
+              }}
+            >
+              <div
+                className="flex items-center gap-3.5 mb-6 pb-4 border-b"
+                style={{ borderColor: 'var(--border-color)' }}
+              >
+                <div
+                  className="w-12 h-12 rounded-xl overflow-hidden border shrink-0"
+                  style={{
+                    backgroundColor: 'var(--surface-secondary)',
+                    borderColor: 'var(--border-color)',
+                  }}
+                >
                   <img
                     src={PERSONAL_INFO.profileImage}
                     alt={PERSONAL_INFO.name}
@@ -129,31 +162,52 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ prefillService }
                   />
                 </div>
                 <div>
-                  <span className="text-xs font-mono uppercase tracking-wider text-slate-400 block font-semibold">
+                  <span
+                    className="text-xs font-mono uppercase tracking-wider block font-bold"
+                    style={{ color: 'var(--text-secondary)' }}
+                  >
                     Direct Channels
                   </span>
-                  <div className="text-sm font-bold text-white">Sammy Leumas</div>
+                  <div className="text-sm font-black" style={{ color: 'var(--text-primary)' }}>
+                    Sammy Leumas
+                  </div>
                 </div>
               </div>
 
-              <p className="text-xs sm:text-sm text-slate-300 font-light mb-6">
+              <p className="text-xs sm:text-sm font-normal mb-6" style={{ color: 'var(--text-secondary)' }}>
                 You can reach Sammy Leumas directly via email, phone, or schedule a virtual discovery sprint.
               </p>
 
               <div className="space-y-4">
                 {/* Email item */}
-                <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center justify-between">
+                <div
+                  className="p-4 rounded-2xl border flex items-center justify-between"
+                  style={{
+                    backgroundColor: 'var(--surface-secondary)',
+                    borderColor: 'var(--border-color)',
+                  }}
+                >
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-white/[0.05] flex items-center justify-center text-[#38BDF8]">
+                    <div
+                      className="w-9 h-9 rounded-xl flex items-center justify-center"
+                      style={{
+                        backgroundColor: 'var(--surface-card)',
+                        color: 'var(--primary-accent)',
+                      }}
+                    >
                       <Mail className="w-4 h-4" />
                     </div>
                     <div>
-                      <span className="text-[10px] text-slate-400 font-mono uppercase tracking-wider block">
+                      <span
+                        className="text-[10px] font-mono uppercase tracking-wider block font-bold"
+                        style={{ color: 'var(--text-secondary)' }}
+                      >
                         EMAIL
                       </span>
                       <a
                         href={`mailto:${PERSONAL_INFO.email}`}
-                        className="text-xs sm:text-sm font-bold text-white hover:text-[#38BDF8] transition-colors"
+                        className="text-xs sm:text-sm font-bold transition-opacity hover:opacity-80"
+                        style={{ color: 'var(--text-primary)' }}
                       >
                         {PERSONAL_INFO.email}
                       </a>
@@ -162,26 +216,51 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ prefillService }
                   <button
                     type="button"
                     onClick={copyEmail}
-                    className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white transition-colors cursor-pointer"
+                    className="p-2 rounded-lg border transition-colors cursor-pointer"
+                    style={{
+                      backgroundColor: 'var(--surface-card)',
+                      borderColor: 'var(--border-color)',
+                      color: 'var(--text-secondary)',
+                    }}
                     aria-label="Copy Email"
                   >
-                    {copiedEmail ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                    {copiedEmail ? (
+                      <Check className="w-4 h-4" style={{ color: 'var(--color-success)' }} />
+                    ) : (
+                      <Copy className="w-4 h-4" />
+                    )}
                   </button>
                 </div>
 
                 {/* Phone item */}
-                <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center justify-between">
+                <div
+                  className="p-4 rounded-2xl border flex items-center justify-between"
+                  style={{
+                    backgroundColor: 'var(--surface-secondary)',
+                    borderColor: 'var(--border-color)',
+                  }}
+                >
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-white/[0.05] flex items-center justify-center text-emerald-400">
+                    <div
+                      className="w-9 h-9 rounded-xl flex items-center justify-center"
+                      style={{
+                        backgroundColor: 'var(--surface-card)',
+                        color: 'var(--color-success)',
+                      }}
+                    >
                       <Phone className="w-4 h-4" />
                     </div>
                     <div>
-                      <span className="text-[10px] text-slate-400 font-mono uppercase tracking-wider block">
+                      <span
+                        className="text-[10px] font-mono uppercase tracking-wider block font-bold"
+                        style={{ color: 'var(--text-secondary)' }}
+                      >
                         DIRECT PHONE
                       </span>
                       <a
                         href={`tel:${PERSONAL_INFO.phone}`}
-                        className="text-xs sm:text-sm font-bold text-white hover:text-emerald-400 transition-colors font-mono"
+                        className="text-xs sm:text-sm font-bold transition-opacity hover:opacity-80 font-mono"
+                        style={{ color: 'var(--text-primary)' }}
                       >
                         {PERSONAL_INFO.formattedPhone}
                       </a>
@@ -190,23 +269,47 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ prefillService }
                   <button
                     type="button"
                     onClick={copyPhone}
-                    className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white transition-colors cursor-pointer"
+                    className="p-2 rounded-lg border transition-colors cursor-pointer"
+                    style={{
+                      backgroundColor: 'var(--surface-card)',
+                      borderColor: 'var(--border-color)',
+                      color: 'var(--text-secondary)',
+                    }}
                     aria-label="Copy Phone Number"
                   >
-                    {copiedPhone ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                    {copiedPhone ? (
+                      <Check className="w-4 h-4" style={{ color: 'var(--color-success)' }} />
+                    ) : (
+                      <Copy className="w-4 h-4" />
+                    )}
                   </button>
                 </div>
 
                 {/* Location */}
-                <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-white/[0.05] flex items-center justify-center text-[#818CF8]">
+                <div
+                  className="p-4 rounded-2xl border flex items-center gap-3"
+                  style={{
+                    backgroundColor: 'var(--surface-secondary)',
+                    borderColor: 'var(--border-color)',
+                  }}
+                >
+                  <div
+                    className="w-9 h-9 rounded-xl flex items-center justify-center"
+                    style={{
+                      backgroundColor: 'var(--surface-card)',
+                      color: 'var(--accent-hover)',
+                    }}
+                  >
                     <MapPin className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="text-[10px] text-slate-400 font-mono uppercase tracking-wider block">
+                    <span
+                      className="text-[10px] font-mono uppercase tracking-wider block font-bold"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
                       LOCATION &amp; TIMEZONE
                     </span>
-                    <span className="text-xs sm:text-sm font-medium text-white">
+                    <span className="text-xs sm:text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
                       {PERSONAL_INFO.location} (WAT / UTC+1)
                     </span>
                   </div>
@@ -215,31 +318,61 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ prefillService }
             </div>
 
             {/* Response Promise */}
-            <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 text-xs text-slate-400">
-              <strong className="text-white block font-medium mb-1">Turnaround Commitment</strong>
+            <div
+              className="p-5 rounded-2xl border text-xs"
+              style={{
+                backgroundColor: 'var(--surface-card)',
+                borderColor: 'var(--border-color)',
+                color: 'var(--text-secondary)',
+              }}
+            >
+              <strong className="block font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
+                Turnaround Commitment
+              </strong>
               All client briefs, project inquiries, and technical questions receive a direct response within 24 business hours.
             </div>
           </div>
 
           {/* Right Column: Interactive Form (7 cols) */}
           <div className="lg:col-span-7">
-            <div className="p-6 sm:p-8 md:p-10 rounded-3xl bg-gradient-to-b from-white/[0.06] to-transparent border border-white/10 shadow-2xl backdrop-blur-sm">
+            <div
+              className="p-6 sm:p-8 md:p-10 rounded-3xl border shadow-xl"
+              style={{
+                backgroundColor: 'var(--surface-card)',
+                borderColor: 'var(--border-color)',
+                boxShadow: 'var(--card-shadow)',
+              }}
+            >
               {isSuccess ? (
                 <div className="py-8 flex flex-col items-center text-center">
-                  <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4">
+                  <div
+                    className="w-16 h-16 rounded-full flex items-center justify-center mb-4"
+                    style={{
+                      backgroundColor: 'var(--badge-bg)',
+                      color: 'var(--color-success)',
+                    }}
+                  >
                     <CheckCircle2 className="w-10 h-10" />
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-2">
+                  <h3 className="text-2xl sm:text-3xl font-black mb-2" style={{ color: 'var(--text-primary)' }}>
                     Inquiry Received
                   </h3>
-                  <p className="text-sm text-slate-300 max-w-md mb-6 leading-relaxed font-light">
-                    Thank you, <span className="text-white font-medium">{fullName}</span>. Sammy Leumas has received your inquiry for <span className="text-white font-medium">{service}</span> and will review the details shortly.
+                  <p
+                    className="text-sm max-w-md mb-6 leading-relaxed font-normal"
+                    style={{ color: 'var(--text-secondary)' }}
+                  >
+                    Thank you, <span className="font-bold" style={{ color: 'var(--text-primary)' }}>{fullName}</span>. Sammy Leumas has received your inquiry for <span className="font-bold" style={{ color: 'var(--text-primary)' }}>{service}</span> and will review the details shortly.
                   </p>
 
                   <div className="flex flex-wrap items-center justify-center gap-3">
                     <a
                       href={generateMailtoUrl()}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-medium text-xs uppercase tracking-wider transition-colors"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border font-bold text-xs uppercase tracking-wider transition-colors"
+                      style={{
+                        backgroundColor: 'var(--surface-secondary)',
+                        borderColor: 'var(--border-color)',
+                        color: 'var(--text-primary)',
+                      }}
                     >
                       <span>Open in Mail Client</span>
                       <ExternalLink className="w-3.5 h-3.5" />
@@ -247,7 +380,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ prefillService }
                     <button
                       type="button"
                       onClick={handleReset}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-slate-900 font-semibold text-xs uppercase tracking-wider hover:bg-slate-200 transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
+                      style={{ backgroundColor: 'var(--primary-accent)' }}
                     >
                       <RefreshCw className="w-3.5 h-3.5" />
                       <span>Send Another Message</span>
@@ -257,16 +391,26 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ prefillService }
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
                   {errorMsg && (
-                    <div className="p-4 rounded-xl bg-[#F43F5E]/10 border border-[#F43F5E]/30 text-xs text-[#F43F5E] flex items-center gap-2">
+                    <div
+                      className="p-4 rounded-xl border text-xs flex items-center gap-2"
+                      style={{
+                        backgroundColor: 'rgba(220, 38, 38, 0.1)',
+                        borderColor: 'var(--color-error)',
+                        color: 'var(--color-error)',
+                      }}
+                    >
                       <AlertCircle className="w-4 h-4 shrink-0" />
-                      <span>{errorMsg}</span>
+                      <span className="font-semibold">{errorMsg}</span>
                     </div>
                   )}
 
                   {/* Name & Email Row */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-mono uppercase tracking-wider text-slate-300 mb-1.5 font-medium">
+                      <label
+                        className="block text-xs font-mono uppercase tracking-wider mb-1.5 font-bold"
+                        style={{ color: 'var(--text-secondary)' }}
+                      >
                         Full Name *
                       </label>
                       <input
@@ -275,11 +419,19 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ prefillService }
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                         placeholder="e.g. Alex Henderson"
-                        className="w-full bg-[#08090E] border border-white/15 focus:border-[#38BDF8] rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition-colors"
+                        className="w-full border rounded-xl px-4 py-3 text-sm outline-none transition-colors"
+                        style={{
+                          backgroundColor: 'var(--surface-secondary)',
+                          borderColor: 'var(--border-color)',
+                          color: 'var(--text-primary)',
+                        }}
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-mono uppercase tracking-wider text-slate-300 mb-1.5 font-medium">
+                      <label
+                        className="block text-xs font-mono uppercase tracking-wider mb-1.5 font-bold"
+                        style={{ color: 'var(--text-secondary)' }}
+                      >
                         Email Address *
                       </label>
                       <input
@@ -288,7 +440,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ prefillService }
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="alex@company.com"
-                        className="w-full bg-[#08090E] border border-white/15 focus:border-[#38BDF8] rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition-colors"
+                        className="w-full border rounded-xl px-4 py-3 text-sm outline-none transition-colors"
+                        style={{
+                          backgroundColor: 'var(--surface-secondary)',
+                          borderColor: 'var(--border-color)',
+                          color: 'var(--text-primary)',
+                        }}
                       />
                     </div>
                   </div>
@@ -296,27 +453,43 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ prefillService }
                   {/* Company & Budget Row */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-mono uppercase tracking-wider text-slate-400 mb-1.5">
-                        Company or Project Name <span className="text-slate-500">(Optional)</span>
+                      <label
+                        className="block text-xs font-mono uppercase tracking-wider mb-1.5 font-bold"
+                        style={{ color: 'var(--text-secondary)' }}
+                      >
+                        Company or Project Name <span className="opacity-60">(Optional)</span>
                       </label>
                       <input
                         type="text"
                         value={company}
                         onChange={(e) => setCompany(e.target.value)}
                         placeholder="Studio / Startup name"
-                        className="w-full bg-[#08090E] border border-white/15 focus:border-[#38BDF8] rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition-colors"
+                        className="w-full border rounded-xl px-4 py-3 text-sm outline-none transition-colors"
+                        style={{
+                          backgroundColor: 'var(--surface-secondary)',
+                          borderColor: 'var(--border-color)',
+                          color: 'var(--text-primary)',
+                        }}
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-mono uppercase tracking-wider text-slate-400 mb-1.5">
-                        Estimated Budget <span className="text-slate-500">(Optional)</span>
+                      <label
+                        className="block text-xs font-mono uppercase tracking-wider mb-1.5 font-bold"
+                        style={{ color: 'var(--text-secondary)' }}
+                      >
+                        Estimated Budget <span className="opacity-60">(500 USD Base)</span>
                       </label>
                       <select
                         value={budget}
                         onChange={(e) => setBudget(e.target.value)}
-                        className="w-full bg-[#08090E] border border-white/15 focus:border-[#38BDF8] rounded-xl px-4 py-3 text-sm text-white outline-none transition-colors cursor-pointer"
+                        className="w-full border rounded-xl px-4 py-3 text-sm outline-none transition-colors cursor-pointer"
+                        style={{
+                          backgroundColor: 'var(--surface-secondary)',
+                          borderColor: 'var(--border-color)',
+                          color: 'var(--text-primary)',
+                        }}
                       >
-                        <option value="$500">$500</option>
+                        <option value="$500">$500 (Base Project)</option>
                         <option value="$500 - $1,000">$500 - $1,000</option>
                         <option value="$1,000 - $2,500">$1,000 - $2,500</option>
                         <option value="$2,500 - $5,000">$2,500 - $5,000</option>
@@ -328,25 +501,29 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ prefillService }
 
                   {/* Service of Interest */}
                   <div>
-                    <label className="block text-xs font-mono uppercase tracking-wider text-slate-300 mb-2 font-medium">
+                    <label
+                      className="block text-xs font-mono uppercase tracking-wider mb-2 font-bold"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
                       Service of Interest
                     </label>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                       {[
                         'Web Development',
                         'UI/UX Design',
-                        'Branding',
+                        '3D Web & WebGL',
                         'AI & Prompting',
                       ].map((item) => (
                         <button
                           key={item}
                           type="button"
                           onClick={() => setService(item)}
-                          className={`p-2.5 rounded-xl text-xs font-medium text-center border transition-all cursor-pointer ${
-                            service === item
-                              ? 'border-[#38BDF8] bg-[#38BDF8]/10 text-white font-semibold'
-                              : 'border-white/10 bg-white/[0.02] text-slate-400 hover:text-white'
-                          }`}
+                          className="p-2.5 rounded-xl text-xs font-bold text-center border transition-all cursor-pointer"
+                          style={{
+                            backgroundColor: service === item ? 'var(--primary-accent)' : 'var(--surface-secondary)',
+                            borderColor: service === item ? 'var(--primary-accent)' : 'var(--border-color)',
+                            color: service === item ? '#FFFFFF' : 'var(--text-secondary)',
+                          }}
                         >
                           {item}
                         </button>
@@ -356,7 +533,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ prefillService }
 
                   {/* Project Description */}
                   <div>
-                    <label className="block text-xs font-mono uppercase tracking-wider text-slate-300 mb-1.5 font-medium">
+                    <label
+                      className="block text-xs font-mono uppercase tracking-wider mb-1.5 font-bold"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
                       Project Description *
                     </label>
                     <textarea
@@ -365,7 +545,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ prefillService }
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       placeholder="Describe your goals, timeline, deliverables, or problem you want to solve..."
-                      className="w-full bg-[#08090E] border border-white/15 focus:border-[#38BDF8] rounded-xl p-4 text-sm text-white placeholder-slate-500 outline-none transition-colors resize-none"
+                      className="w-full border rounded-xl p-4 text-sm outline-none transition-colors resize-none"
+                      style={{
+                        backgroundColor: 'var(--surface-secondary)',
+                        borderColor: 'var(--border-color)',
+                        color: 'var(--text-primary)',
+                      }}
                     />
                   </div>
 
@@ -376,22 +561,30 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ prefillService }
                       id="consent"
                       checked={consent}
                       onChange={(e) => setConsent(e.target.checked)}
-                      className="mt-1 w-4 h-4 rounded border-white/20 bg-[#08090E] text-[#38BDF8] focus:ring-0 cursor-pointer"
+                      className="mt-1 w-4 h-4 rounded cursor-pointer"
+                      style={{ accentColor: 'var(--primary-accent)' }}
                     />
-                    <label htmlFor="consent" className="text-xs text-slate-400 cursor-pointer select-none">
+                    <label
+                      htmlFor="consent"
+                      className="text-xs cursor-pointer select-none font-medium"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
                       I agree to allow Sammy Leumas to process these details to respond to this inquiry.
                     </label>
                   </div>
 
                   {/* Submit Button */}
                   <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <span className="text-[11px] text-slate-500 font-mono">
+                    <span className="text-[11px] font-mono" style={{ color: 'var(--text-secondary)' }}>
                       Direct delivery to {PERSONAL_INFO.email}
                     </span>
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-white text-slate-900 font-semibold text-xs uppercase tracking-wider hover:bg-slate-200 active:scale-95 disabled:opacity-50 transition-all cursor-pointer shadow-lg"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-white font-bold text-xs uppercase tracking-wider disabled:opacity-50 transition-all cursor-pointer shadow-lg hover:scale-105 active:scale-95"
+                      style={{ backgroundColor: 'var(--primary-accent)' }}
+                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--accent-hover)')}
+                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'var(--primary-accent)')}
                     >
                       {isLoading ? (
                         <>

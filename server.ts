@@ -51,6 +51,7 @@ Key Featured Works:
 1. InvoiceFlow (Web Application / SaaS): Multi-user invoicing, real-time calculations, PDF builder, customer ledger (Live: https://invoicefl.base44.app).
 2. SL-LAUNCHER (Android / Mobile Experience): Fluid home-screen environment with 120 FPS gesture engine, thumb-zone search, and adaptive Material You theming.
 3. SL-TAXI-DRIVER (Interactive Web / 3D Game): Real-time browser-based 3D driving simulation with custom vehicle physics and Web Audio synthesis (Live: https://sl-taxi-driver.vercel.app).
+4. SL-DESIGN 3D WEBSITE (3D Web & Interactive Studio): High-impact 3D portfolio with custom WebGL shaders, kinetic magnetic hover interactions, and spatial typography (Live: https://sl-design-five.vercel.app).
 
 Core Services Offered:
 - Web Development (responsive web apps, portfolios, corporate platforms)

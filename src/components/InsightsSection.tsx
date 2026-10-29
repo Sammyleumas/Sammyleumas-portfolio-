@@ -9,7 +9,6 @@ import {
   Play,
   Pause,
   BookOpen,
-  Sparkles,
 } from 'lucide-react';
 import { Article, ARTICLES } from '../data/portfolioData';
 
@@ -41,7 +40,6 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({ onSelectArticl
     setActiveIndex((prev) => (prev - 1 + total) % total);
   };
 
-  // Autoplay effect
   useEffect(() => {
     if (!isAutoPlaying) return;
     const interval = setInterval(() => {
@@ -50,7 +48,6 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({ onSelectArticl
     return () => clearInterval(interval);
   }, [isAutoPlaying, activeIndex]);
 
-  // Touch gesture handlers
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
   };
@@ -69,7 +66,6 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({ onSelectArticl
     touchStartX.current = null;
   };
 
-  // Filter interaction: selecting category scrolls carousel directly to that article
   const handleCategoryClick = (cat: string) => {
     setSelectedCategory(cat);
     if (cat === 'All') return;
@@ -82,32 +78,43 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({ onSelectArticl
   return (
     <section
       id="insights"
-      className="relative w-full py-24 sm:py-32 px-5 sm:px-8 md:px-12 bg-[#090A0F] border-t border-white/5 overflow-hidden select-none"
+      className="relative w-full py-24 sm:py-32 px-5 sm:px-8 md:px-12 border-t overflow-hidden select-none transition-colors"
+      style={{
+        backgroundColor: 'var(--bg-page)',
+        borderColor: 'var(--border-color)',
+      }}
     >
-      {/* Background ambient flare */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[42rem] h-[26rem] bg-[#818CF8]/6 rounded-full blur-3xl pointer-events-none -z-10"
-        aria-hidden="true"
-      />
-
       <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
+        {/* Section Header with BIG FONT */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16 pb-8 border-b border-white/10"
+          transition={{ duration: 0.75, ease: 'easeOut' }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16 pb-8 border-b"
+          style={{ borderColor: 'var(--border-color)' }}
         >
           <div>
-            <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#38BDF8] mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] animate-pulse" />
-              <span>INSIGHTS &amp; WRITING · 3D CAROUSEL</span>
+            <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider mb-3 font-bold">
+              <span
+                className="w-2 h-2 rounded-full animate-pulse"
+                style={{ backgroundColor: 'var(--primary-accent)' }}
+              />
+              <span style={{ color: 'var(--primary-accent)' }}>
+                INSIGHTS &amp; WRITING · 3D CAROUSEL
+              </span>
             </div>
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white editorial-title">
+            {/* BIG FONT FOR SECTION */}
+            <h2
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight big-section-title"
+              style={{ color: 'var(--text-primary)' }}
+            >
               Notes from the process.
             </h2>
-            <p className="text-sm sm:text-base text-slate-300 font-light max-w-2xl mt-3 leading-relaxed">
+            <p
+              className="text-base sm:text-lg font-normal max-w-2xl mt-4 leading-relaxed"
+              style={{ color: 'var(--text-secondary)' }}
+            >
               Reflections on creative technology, user experience, prompt engineering, and building resilient digital products.
             </p>
           </div>
@@ -117,17 +124,22 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({ onSelectArticl
             <button
               type="button"
               onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-              className="px-3 py-2 rounded-xl bg-white/[0.04] border border-white/10 hover:bg-white/10 text-xs font-mono text-slate-300 flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="px-3.5 py-2 rounded-xl border text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer"
+              style={{
+                backgroundColor: 'var(--surface-secondary)',
+                borderColor: 'var(--border-color)',
+                color: 'var(--text-secondary)',
+              }}
               aria-label="Toggle Autoplay"
             >
               {isAutoPlaying ? (
                 <>
-                  <Pause className="w-3.5 h-3.5 text-[#38BDF8]" />
+                  <Pause className="w-3.5 h-3.5" style={{ color: 'var(--primary-accent)' }} />
                   <span className="hidden sm:inline">Pause</span>
                 </>
               ) : (
                 <>
-                  <Play className="w-3.5 h-3.5 text-slate-400" />
+                  <Play className="w-3.5 h-3.5" />
                   <span className="hidden sm:inline">Auto</span>
                 </>
               )}
@@ -137,7 +149,12 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({ onSelectArticl
               <button
                 type="button"
                 onClick={prevSlide}
-                className="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/10 hover:bg-white/15 text-slate-200 hover:text-white flex items-center justify-center transition-all cursor-pointer active:scale-95 focus-visible:outline-2 focus-visible:outline-[#38BDF8]"
+                className="w-10 h-10 rounded-xl border flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-sm"
+                style={{
+                  backgroundColor: 'var(--surface-card)',
+                  borderColor: 'var(--border-color)',
+                  color: 'var(--text-primary)',
+                }}
                 aria-label="Previous Article"
               >
                 <ChevronLeft className="w-5 h-5" />
@@ -145,7 +162,12 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({ onSelectArticl
               <button
                 type="button"
                 onClick={nextSlide}
-                className="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/10 hover:bg-white/15 text-slate-200 hover:text-white flex items-center justify-center transition-all cursor-pointer active:scale-95 focus-visible:outline-2 focus-visible:outline-[#38BDF8]"
+                className="w-10 h-10 rounded-xl border flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-sm"
+                style={{
+                  backgroundColor: 'var(--surface-card)',
+                  borderColor: 'var(--border-color)',
+                  color: 'var(--text-primary)',
+                }}
                 aria-label="Next Article"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -155,17 +177,23 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({ onSelectArticl
         </motion.div>
 
         {/* Category Pill Filters */}
-        <div className="flex flex-wrap gap-1.5 p-1 rounded-2xl bg-white/[0.04] border border-white/10 mb-8 max-w-fit">
+        <div
+          className="flex flex-wrap gap-1.5 p-1.5 rounded-2xl border mb-8 max-w-fit"
+          style={{
+            backgroundColor: 'var(--surface-secondary)',
+            borderColor: 'var(--border-color)',
+          }}
+        >
           {categories.map((cat) => (
             <button
               key={cat}
               type="button"
               onClick={() => handleCategoryClick(cat)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors cursor-pointer ${
-                selectedCategory === cat
-                  ? 'bg-white text-slate-900 font-semibold shadow-sm'
-                  : 'text-slate-400 hover:text-white'
-              }`}
+              className="px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+              style={{
+                backgroundColor: selectedCategory === cat ? 'var(--primary-accent)' : 'transparent',
+                color: selectedCategory === cat ? '#FFFFFF' : 'var(--text-secondary)',
+              }}
             >
               {cat}
             </button>
@@ -182,7 +210,6 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({ onSelectArticl
           onMouseLeave={() => setIsAutoPlaying(true)}
         >
           {ARTICLES.map((article: Article, index: number) => {
-            // Calculate shortest signed distance on the 4-item ring [-2, -1, 0, 1, 2]
             let offset = index - activeIndex;
             if (offset > total / 2) offset -= total;
             if (offset < -total / 2) offset += total;
@@ -192,7 +219,6 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({ onSelectArticl
             const isLeft = offset === -1;
             const isBack = Math.abs(offset) >= 2;
 
-            // 3D positioning transforms matching Services 3D stage
             let transform = 'translate3d(0, 0, -400px) scale(0.65)';
             let opacity = 0;
             let zIndex = 5;
@@ -247,54 +273,77 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({ onSelectArticl
                 }}
               >
                 <article
-                  className={`p-6 sm:p-8 md:p-9 rounded-3xl bg-gradient-to-b from-[#141824]/95 to-[#0D101A]/95 border ${
-                    isCenter
-                      ? 'border-[#38BDF8]/40 shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(56,189,248,0.15)] ring-1 ring-[#38BDF8]/20'
-                      : 'border-white/10 shadow-xl'
-                  } backdrop-blur-xl flex flex-col justify-between h-[520px] sm:h-[550px] md:h-[580px] group`}
+                  className="p-6 sm:p-8 md:p-9 rounded-3xl border backdrop-blur-xl flex flex-col justify-between h-[520px] sm:h-[550px] md:h-[580px] group"
+                  style={{
+                    backgroundColor: 'var(--surface-card)',
+                    borderColor: isCenter ? 'var(--primary-accent)' : 'var(--border-color)',
+                    boxShadow: isCenter ? 'var(--card-shadow)' : 'none',
+                  }}
                 >
                   <div>
                     {/* Cover image & category badge */}
-                    <div className="rounded-2xl overflow-hidden aspect-[16/9] mb-5 bg-[#12141C] border border-white/10 relative">
+                    <div
+                      className="rounded-2xl overflow-hidden aspect-[16/9] mb-5 border relative"
+                      style={{
+                        backgroundColor: 'var(--surface-secondary)',
+                        borderColor: 'var(--border-color)',
+                      }}
+                    >
                       <img
                         src={article.coverImage}
                         alt={article.title}
                         loading="lazy"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                       />
-                      <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-[10px] font-mono text-[#38BDF8] uppercase tracking-wider font-semibold border border-white/10">
+                      <div
+                        className="absolute top-3 left-3 px-3 py-1 rounded-full backdrop-blur-md text-[10px] font-mono uppercase tracking-wider font-bold border shadow-sm"
+                        style={{
+                          backgroundColor: 'var(--surface-card)',
+                          borderColor: 'var(--border-color)',
+                          color: 'var(--primary-accent)',
+                        }}
+                      >
                         {article.category}
                       </div>
                     </div>
 
                     {/* Metadata strip */}
-                    <div className="flex items-center gap-3 text-xs font-mono text-slate-400 mb-2.5">
+                    <div
+                      className="flex items-center gap-3 text-xs font-mono mb-2.5"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
                       <span className="flex items-center gap-1">
-                        <Calendar className="w-3.5 h-3.5 text-slate-500" />
+                        <Calendar className="w-3.5 h-3.5 opacity-60" />
                         <span>{article.publishedDate}</span>
                       </span>
                       <span>·</span>
                       <span className="flex items-center gap-1">
-                        <Clock className="w-3.5 h-3.5 text-slate-500" />
+                        <Clock className="w-3.5 h-3.5 opacity-60" />
                         <span>{article.readingTime}</span>
                       </span>
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 group-hover:text-[#38BDF8] transition-colors line-clamp-2 leading-tight">
+                    <h3
+                      className="text-xl sm:text-2xl font-black mb-3 group-hover:opacity-85 transition-opacity line-clamp-2 leading-tight"
+                      style={{ color: 'var(--text-primary)' }}
+                    >
                       {article.title}
                     </h3>
 
                     {/* Summary */}
-                    <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed line-clamp-3">
+                    <p
+                      className="text-xs sm:text-sm font-normal leading-relaxed line-clamp-3"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
                       {article.summary}
                     </p>
                   </div>
 
                   {/* Read Note Action Footer */}
-                  <div className="pt-4 border-t border-white/10 flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-xs font-medium text-slate-400">
-                      <BookOpen className="w-4 h-4 text-[#38BDF8]" />
+                  <div className="pt-4 border-t flex items-center justify-between" style={{ borderColor: 'var(--border-color)' }}>
+                    <div className="flex items-center gap-2 text-xs font-semibold" style={{ color: 'var(--text-secondary)' }}>
+                      <BookOpen className="w-4 h-4" style={{ color: 'var(--primary-accent)' }} />
                       <span>Journal Note</span>
                     </div>
 
@@ -304,7 +353,10 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({ onSelectArticl
                         e.stopPropagation();
                         onSelectArticle(article);
                       }}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white text-slate-900 font-semibold text-xs uppercase tracking-wider hover:bg-slate-200 transition-all cursor-pointer shadow-sm active:scale-95"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-white font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm hover:scale-105 active:scale-95"
+                      style={{ backgroundColor: 'var(--primary-accent)' }}
+                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--accent-hover)')}
+                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'var(--primary-accent)')}
                     >
                       <span>Read Note</span>
                       <ArrowUpRight className="w-3.5 h-3.5" />
@@ -324,16 +376,16 @@ export const InsightsSection: React.FC<InsightsSectionProps> = ({ onSelectArticl
                 key={idx}
                 type="button"
                 onClick={() => setActiveIndex(idx)}
-                className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                  activeIndex === idx
-                    ? 'w-8 bg-[#38BDF8]'
-                    : 'w-2 bg-white/20 hover:bg-white/40'
-                }`}
+                className="h-2 rounded-full transition-all duration-300 cursor-pointer"
+                style={{
+                  width: activeIndex === idx ? '32px' : '8px',
+                  backgroundColor: activeIndex === idx ? 'var(--primary-accent)' : 'var(--border-color)',
+                }}
                 aria-label={`Go to article ${idx + 1}`}
               />
             ))}
           </div>
-          <div className="font-mono text-xs text-slate-500">
+          <div className="font-mono text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>
             0{activeIndex + 1} / 0{total} · Click active card to open full essay
           </div>
         </div>

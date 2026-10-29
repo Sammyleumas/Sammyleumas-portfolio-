@@ -1,6 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, Compass, Eye, ShieldCheck, Terminal, Layers, Sparkles, MapPin, CheckCircle2 } from 'lucide-react';
+import {
+  ArrowRight,
+  Compass,
+  Eye,
+  ShieldCheck,
+  Terminal,
+  Layers,
+  Sparkles,
+  MapPin,
+  CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
+  Play,
+  Pause,
+} from 'lucide-react';
 import { PHILOSOPHY_PRINCIPLES, PERSONAL_INFO } from '../data/portfolioData';
 
 interface AboutSectionProps {
@@ -8,29 +22,71 @@ interface AboutSectionProps {
 }
 
 export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenContact }) => {
+  const [activeProcessIdx, setActiveProcessIdx] = useState(0);
+  const [isProcessAutoPlay, setIsProcessAutoPlay] = useState(true);
+  const touchStartX = useRef<number | null>(null);
+
+  const totalPrinciples = PHILOSOPHY_PRINCIPLES.length;
+
+  const nextProcess = () => {
+    setActiveProcessIdx((prev) => (prev + 1) % totalPrinciples);
+  };
+
+  const prevProcess = () => {
+    setActiveProcessIdx((prev) => (prev - 1 + totalPrinciples) % totalPrinciples);
+  };
+
+  useEffect(() => {
+    if (!isProcessAutoPlay) return;
+    const interval = setInterval(() => {
+      nextProcess();
+    }, 5500);
+    return () => clearInterval(interval);
+  }, [isProcessAutoPlay, activeProcessIdx]);
+
   const scrollToWork = () => {
     const el = document.getElementById('work');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <section id="about" className="relative w-full py-24 sm:py-32 px-5 sm:px-8 md:px-12 bg-[#090A0F] border-t border-white/5 overflow-hidden">
+    <section
+      id="about"
+      className="relative w-full py-24 sm:py-32 px-5 sm:px-8 md:px-12 border-t overflow-hidden transition-colors"
+      style={{
+        backgroundColor: 'var(--bg-page)',
+        borderColor: 'var(--border-color)',
+      }}
+    >
       <div className="max-w-7xl mx-auto">
-        {/* Section Header with smooth entrance */}
+        {/* Section Header with BIG FONT */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-16"
+          transition={{ duration: 0.75, ease: 'easeOut' }}
+          className="mb-16 pb-8 border-b"
+          style={{ borderColor: 'var(--border-color)' }}
         >
-          <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#38BDF8] mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] animate-pulse" />
-            <span>ABOUT SAMMY LEUMAS</span>
+          <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider mb-3 font-bold">
+            <span
+              className="w-2 h-2 rounded-full animate-pulse"
+              style={{ backgroundColor: 'var(--primary-accent)' }}
+            />
+            <span style={{ color: 'var(--primary-accent)' }}>ABOUT SAMMY LEUMAS</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white editorial-title">
+          <h2
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight big-section-title"
+            style={{ color: 'var(--text-primary)' }}
+          >
             Curiosity drives the build.
           </h2>
+          <p
+            className="text-base sm:text-lg font-normal max-w-2xl mt-4 leading-relaxed"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            Creative thinking united with intelligent engineering to transform ambitious visions into enduring digital artifacts.
+          </p>
         </motion.div>
 
         {/* Biography & Studio Presence Split Grid */}
@@ -40,10 +96,11 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenContact }) => 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7 flex flex-col gap-6 text-base sm:text-lg text-slate-300 font-light leading-relaxed"
+            transition={{ duration: 0.8, delay: 0.1, ease: 'easeOut' }}
+            className="lg:col-span-7 flex flex-col gap-6 text-base sm:text-lg font-normal leading-relaxed"
+            style={{ color: 'var(--text-secondary)' }}
           >
-            <p className="text-white font-normal text-lg sm:text-xl leading-snug">
+            <p className="font-semibold text-lg sm:text-xl leading-snug" style={{ color: 'var(--text-primary)' }}>
               I&apos;m Sammy Leumas, a creative technologist, web developer, and digital designer passionate about turning ideas into meaningful digital experiences.
             </p>
 
@@ -52,14 +109,21 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenContact }) => 
             </p>
 
             <p>
-              Through my work with <strong className="text-white font-medium">SL-TECHCO</strong> and <strong className="text-white font-medium">SL-DESIGN</strong>, I pursue opportunities to help individuals and businesses establish their digital presence, communicate their ideas, and bring their visions to life.
+              Through my work with <strong className="font-bold" style={{ color: 'var(--text-primary)' }}>SL-TECHCO</strong> and <strong className="font-bold" style={{ color: 'var(--text-primary)' }}>SL-DESIGN</strong>, I pursue opportunities to help individuals and businesses establish their digital presence, communicate their ideas, and bring their visions to life.
             </p>
 
             <p>
               Beyond client projects, I&apos;m passionate about experimenting with emerging technologies, developing original digital products, and sharing my journey of creativity, learning, and innovation.
             </p>
 
-            <blockquote className="p-5 rounded-2xl bg-white/[0.03] border-l-2 border-[#38BDF8] text-slate-200 italic font-normal text-base sm:text-lg my-2 transition-colors hover:bg-white/[0.05]">
+            <blockquote
+              className="p-5 rounded-2xl border-l-4 italic font-medium text-base sm:text-lg my-2 transition-colors"
+              style={{
+                backgroundColor: 'var(--surface-secondary)',
+                borderLeftColor: 'var(--primary-accent)',
+                color: 'var(--text-primary)',
+              }}
+            >
               &ldquo;I believe technology should do more than work — it should solve problems, create opportunities, and leave a lasting impression. My mission is simple: to turn ideas into digital experiences that matter.&rdquo;
             </blockquote>
 
@@ -70,8 +134,10 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenContact }) => 
                 onClick={onOpenContact}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.2 }}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-slate-900 font-semibold text-xs uppercase tracking-wider hover:bg-slate-200 transition-colors cursor-pointer shadow-md"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-white font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-md"
+                style={{ backgroundColor: 'var(--primary-accent)' }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--accent-hover)')}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'var(--primary-accent)')}
               >
                 <span>Discuss a Project</span>
                 <ArrowRight className="w-4 h-4" />
@@ -82,8 +148,12 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenContact }) => 
                 onClick={scrollToWork}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.2 }}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/[0.04] border border-white/10 text-white font-medium text-xs uppercase tracking-wider hover:bg-white/10 transition-colors cursor-pointer"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border font-bold text-xs uppercase tracking-wider transition-all cursor-pointer"
+                style={{
+                  backgroundColor: 'var(--surface-secondary)',
+                  borderColor: 'var(--border-color)',
+                  color: 'var(--text-primary)',
+                }}
               >
                 <span>Explore Projects</span>
               </motion.button>
@@ -95,75 +165,124 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenContact }) => 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
             className="lg:col-span-5 flex flex-col gap-6"
           >
-            {/* Creator Profile Spotlight Card with attached photograph */}
-            <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-b from-white/[0.07] to-white/[0.02] border border-white/12 shadow-2xl backdrop-blur-md flex items-center gap-5 group hover:border-white/25 transition-all duration-500">
-              <div className="relative w-20 h-24 sm:w-24 sm:h-28 rounded-2xl overflow-hidden shrink-0 border border-white/20 shadow-md bg-[#12141C]">
+            {/* Creator Profile Spotlight Card */}
+            <div
+              className="p-5 sm:p-6 rounded-3xl border shadow-xl flex items-center gap-5 transition-all duration-300"
+              style={{
+                backgroundColor: 'var(--surface-card)',
+                borderColor: 'var(--border-color)',
+                boxShadow: 'var(--card-shadow)',
+              }}
+            >
+              <div
+                className="relative w-20 h-24 sm:w-24 sm:h-28 rounded-2xl overflow-hidden shrink-0 border shadow-md"
+                style={{
+                  backgroundColor: 'var(--surface-secondary)',
+                  borderColor: 'var(--border-color)',
+                }}
+              >
                 <img
                   src={PERSONAL_INFO.profileImage}
                   alt="Sammy Leumas"
-                  className="w-full h-full object-cover object-top filter contrast-[1.05] group-hover:scale-105 transition-transform duration-500 ease-out"
+                  className="w-full h-full object-cover object-top filter contrast-[1.05]"
                 />
               </div>
 
               <div className="flex flex-col justify-center">
-                <div className="inline-flex items-center gap-1.5 text-[11px] font-mono text-sky-400 uppercase tracking-wider mb-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-sky-400" />
+                <div
+                  className="inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider mb-1 font-bold"
+                  style={{ color: 'var(--primary-accent)' }}
+                >
+                  <CheckCircle2 className="w-3.5 h-3.5" />
                   <span>Verified Creator</span>
                 </div>
-                <div className="text-lg font-bold text-white tracking-tight">Sammy Leumas</div>
-                <p className="text-xs text-slate-400 mt-0.5 leading-snug">
+                <div className="text-lg font-black tracking-tight" style={{ color: 'var(--text-primary)' }}>
+                  Sammy Leumas
+                </div>
+                <p className="text-xs mt-0.5 leading-snug" style={{ color: 'var(--text-secondary)' }}>
                   Creative Technologist · Web Developer · Digital Designer
                 </p>
-                <div className="flex items-center gap-1.5 text-[11px] text-slate-400 font-mono mt-2">
-                  <MapPin className="w-3 h-3 text-slate-500" />
+                <div
+                  className="flex items-center gap-1.5 text-[11px] font-mono mt-2"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  <MapPin className="w-3 h-3 opacity-60" />
                   <span>{PERSONAL_INFO.location}</span>
                 </div>
               </div>
             </div>
 
             {/* Studio Identity Card */}
-            <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-white/[0.06] to-transparent border border-white/10 shadow-xl backdrop-blur-sm hover:border-white/20 transition-all duration-300">
-              <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+            <div
+              className="p-6 sm:p-8 rounded-3xl border shadow-xl transition-all duration-300"
+              style={{
+                backgroundColor: 'var(--surface-card)',
+                borderColor: 'var(--border-color)',
+                boxShadow: 'var(--card-shadow)',
+              }}
+            >
+              <div
+                className="flex items-center justify-between mb-6 pb-4 border-b"
+                style={{ borderColor: 'var(--border-color)' }}
+              >
                 <div>
-                  <span className="text-xs font-mono uppercase tracking-wider text-slate-400 block">
+                  <span
+                    className="text-xs font-mono uppercase tracking-wider block font-bold"
+                    style={{ color: 'var(--text-secondary)' }}
+                  >
                     STUDIO PRACTICE
                   </span>
-                  <div className="text-lg font-bold text-white mt-0.5">SL-TECHCO &amp; SL-DESIGN</div>
+                  <div className="text-lg font-black mt-0.5" style={{ color: 'var(--text-primary)' }}>
+                    SL-TECHCO &amp; SL-DESIGN
+                  </div>
                 </div>
-                <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center font-bold font-mono text-white text-sm">
+                <div
+                  className="w-10 h-10 rounded-xl border flex items-center justify-center font-bold font-mono text-sm"
+                  style={{
+                    backgroundColor: 'var(--surface-secondary)',
+                    borderColor: 'var(--border-color)',
+                    color: 'var(--primary-accent)',
+                  }}
+                >
                   SL.
                 </div>
               </div>
 
-              <div className="space-y-4 text-xs sm:text-sm text-slate-300">
+              <div className="space-y-4 text-xs sm:text-sm">
                 <div className="flex items-start gap-3">
-                  <Terminal className="w-4 h-4 text-[#38BDF8] shrink-0 mt-1" />
+                  <Terminal className="w-4 h-4 shrink-0 mt-1" style={{ color: 'var(--primary-accent)' }} />
                   <div>
-                    <strong className="text-white block font-medium">SL-TECHCO</strong>
-                    <span className="text-slate-400 font-light">
+                    <strong className="block font-bold" style={{ color: 'var(--text-primary)' }}>
+                      SL-TECHCO
+                    </strong>
+                    <span className="font-normal" style={{ color: 'var(--text-secondary)' }}>
                       Technical engineering, web applications, custom algorithms, and system integrations.
                     </span>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Layers className="w-4 h-4 text-[#818CF8] shrink-0 mt-1" />
+                  <Layers className="w-4 h-4 shrink-0 mt-1" style={{ color: 'var(--primary-accent)' }} />
                   <div>
-                    <strong className="text-white block font-medium">SL-DESIGN</strong>
-                    <span className="text-slate-400 font-light">
+                    <strong className="block font-bold" style={{ color: 'var(--text-primary)' }}>
+                      SL-DESIGN
+                    </strong>
+                    <span className="font-normal" style={{ color: 'var(--text-secondary)' }}>
                       Visual systems, brand identity, user interfaces, 3D interaction, and editorial layout.
                     </span>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Sparkles className="w-4 h-4 text-amber-400 shrink-0 mt-1" />
+                  <Sparkles className="w-4 h-4 shrink-0 mt-1" style={{ color: 'var(--accent-hover)' }} />
                   <div>
-                    <strong className="text-white block font-medium">AI &amp; Cognitive Workflows</strong>
-                    <span className="text-slate-400 font-light">
+                    <strong className="block font-bold" style={{ color: 'var(--text-primary)' }}>
+                      AI &amp; Cognitive Workflows
+                    </strong>
+                    <span className="font-normal" style={{ color: 'var(--text-secondary)' }}>
                       Synthesizing generative tools with human taste to accelerate digital product deployment.
                     </span>
                   </div>
@@ -172,8 +291,17 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenContact }) => 
             </div>
 
             {/* Selected Creative Interests */}
-            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/15 transition-all duration-300">
-              <span className="text-xs font-mono uppercase tracking-wider text-slate-400 block mb-3 font-semibold">
+            <div
+              className="p-6 rounded-2xl border transition-all duration-300"
+              style={{
+                backgroundColor: 'var(--surface-secondary)',
+                borderColor: 'var(--border-color)',
+              }}
+            >
+              <span
+                className="text-xs font-mono uppercase tracking-wider block mb-3 font-bold"
+                style={{ color: 'var(--text-secondary)' }}
+              >
                 Core Domains of Practice
               </span>
               <div className="flex flex-wrap gap-2">
@@ -189,7 +317,12 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenContact }) => 
                 ].map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-xs font-mono text-slate-300 hover:border-sky-500/40 hover:bg-sky-500/10 hover:text-sky-300 transition-colors duration-200"
+                    className="px-3 py-1 rounded-full border text-xs font-mono font-medium transition-colors duration-200"
+                    style={{
+                      backgroundColor: 'var(--surface-card)',
+                      borderColor: 'var(--border-color)',
+                      color: 'var(--text-secondary)',
+                    }}
                   >
                     {tag}
                   </span>
@@ -199,59 +332,222 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenContact }) => 
           </motion.div>
         </div>
 
-        {/* Working Philosophy - 3 Core Principles */}
-        <div className="pt-12 border-t border-white/10">
+        {/* Working Philosophy - 3D Carousel of Process Notes */}
+        <div className="pt-16 border-t" style={{ borderColor: 'var(--border-color)' }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-8"
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12"
           >
-            <span className="text-xs font-mono uppercase tracking-wider text-[#38BDF8] block mb-1">
-              WORKING PHILOSOPHY
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-              Three principles behind every build.
-            </h3>
+            <div>
+              <span
+                className="text-xs font-mono uppercase tracking-wider block mb-2 font-bold"
+                style={{ color: 'var(--primary-accent)' }}
+              >
+                WORKING PHILOSOPHY &amp; PROCESS NOTES · 3D CAROUSEL
+              </span>
+              <h3
+                className="text-3xl sm:text-5xl font-black tracking-tight big-section-title"
+                style={{ color: 'var(--text-primary)' }}
+              >
+                Principles behind every build.
+              </h3>
+            </div>
+
+            {/* 3D Carousel Controls */}
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setIsProcessAutoPlay(!isProcessAutoPlay)}
+                className="px-3 py-2 rounded-xl border text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer"
+                style={{
+                  backgroundColor: 'var(--surface-secondary)',
+                  borderColor: 'var(--border-color)',
+                  color: 'var(--text-secondary)',
+                }}
+                aria-label="Toggle Carousel Autoplay"
+              >
+                {isProcessAutoPlay ? (
+                  <>
+                    <Pause className="w-3.5 h-3.5" style={{ color: 'var(--primary-accent)' }} />
+                    <span className="hidden sm:inline">Pause</span>
+                  </>
+                ) : (
+                  <>
+                    <Play className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">Auto</span>
+                  </>
+                )}
+              </button>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={prevProcess}
+                  className="w-10 h-10 rounded-xl border flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-sm"
+                  style={{
+                    backgroundColor: 'var(--surface-card)',
+                    borderColor: 'var(--border-color)',
+                    color: 'var(--text-primary)',
+                  }}
+                  aria-label="Previous principle"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={nextProcess}
+                  className="w-10 h-10 rounded-xl border flex items-center justify-center transition-all cursor-pointer active:scale-95 shadow-sm"
+                  style={{
+                    backgroundColor: 'var(--surface-card)',
+                    borderColor: 'var(--border-color)',
+                    color: 'var(--text-primary)',
+                  }}
+                  aria-label="Next principle"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* 3D Stage for Process Notes */}
+          <div
+            className="relative w-full h-[400px] sm:h-[420px] flex items-center justify-center select-none"
+            style={{ perspective: '1100px' }}
+            onTouchStart={(e) => (touchStartX.current = e.touches[0].clientX)}
+            onTouchEnd={(e) => {
+              if (touchStartX.current === null) return;
+              const diff = e.changedTouches[0].clientX - touchStartX.current;
+              if (Math.abs(diff) > 40) {
+                if (diff > 0) prevProcess();
+                else nextProcess();
+              }
+              touchStartX.current = null;
+            }}
+          >
             {PHILOSOPHY_PRINCIPLES.map((principle, idx) => {
+              let offset = idx - activeProcessIdx;
+              if (offset > totalPrinciples / 2) offset -= totalPrinciples;
+              if (offset < -totalPrinciples / 2) offset += totalPrinciples;
+
+              const isCenter = offset === 0;
+              const isRight = offset === 1;
+              const isLeft = offset === -1;
+
+              let transform = 'translate3d(0, 0, -300px) scale(0.7)';
+              let opacity = 0.2;
+              let zIndex = 5;
+
+              if (isCenter) {
+                transform = 'translate3d(0, 0, 0) rotateY(0deg) scale(1)';
+                opacity = 1;
+                zIndex = 30;
+              } else if (isRight) {
+                transform = 'translate3d(min(280px, 28vw), 0, -120px) rotateY(-20deg) scale(0.88)';
+                opacity = 0.55;
+                zIndex = 15;
+              } else if (isLeft) {
+                transform = 'translate3d(max(-280px, -28vw), 0, -120px) rotateY(20deg) scale(0.88)';
+                opacity = 0.55;
+                zIndex = 15;
+              }
+
               const icons = [
-                <Compass key="1" className="w-5 h-5 text-[#38BDF8]" />,
-                <Eye key="2" className="w-5 h-5 text-[#818CF8]" />,
-                <ShieldCheck key="3" className="w-5 h-5 text-emerald-400" />,
+                <Compass key="1" className="w-6 h-6" style={{ color: 'var(--primary-accent)' }} />,
+                <Eye key="2" className="w-6 h-6" style={{ color: 'var(--accent-hover)' }} />,
+                <ShieldCheck key="3" className="w-6 h-6" style={{ color: 'var(--color-success)' }} />,
               ];
 
               return (
-                <motion.div
+                <div
                   key={principle.number}
-                  initial={{ opacity: 0, y: 25 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-30px' }}
-                  transition={{ duration: 0.65, delay: idx * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                  whileHover={{ y: -4 }}
-                  className="p-6 sm:p-7 rounded-2xl bg-gradient-to-b from-white/[0.04] to-transparent border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between group"
+                  onClick={() => {
+                    if (!isCenter) setActiveProcessIdx(idx);
+                  }}
+                  className={`absolute w-full max-w-[340px] sm:max-w-[460px] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                    !isCenter ? 'cursor-pointer hover:opacity-80' : ''
+                  }`}
+                  style={{
+                    transform,
+                    opacity,
+                    zIndex,
+                    transformStyle: 'preserve-3d',
+                  }}
                 >
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-xs font-mono font-bold text-slate-500 group-hover:text-sky-400 transition-colors">
-                        {principle.number}
-                      </span>
-                      {icons[idx]}
+                  <div
+                    className="p-7 sm:p-9 rounded-3xl border shadow-2xl backdrop-blur-md flex flex-col justify-between h-[340px] sm:h-[360px]"
+                    style={{
+                      backgroundColor: 'var(--surface-card)',
+                      borderColor: isCenter ? 'var(--primary-accent)' : 'var(--border-color)',
+                      boxShadow: isCenter ? 'var(--card-shadow)' : 'none',
+                    }}
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-5 pb-3 border-b" style={{ borderColor: 'var(--border-color)' }}>
+                        <span
+                          className="text-xs font-mono font-bold px-2.5 py-1 rounded-lg"
+                          style={{
+                            backgroundColor: 'var(--surface-secondary)',
+                            color: 'var(--primary-accent)',
+                          }}
+                        >
+                          NOTE {principle.number}
+                        </span>
+                        {icons[idx]}
+                      </div>
+
+                      <h4
+                        className="text-2xl sm:text-3xl font-black mb-3 tracking-tight"
+                        style={{ color: 'var(--text-primary)' }}
+                      >
+                        {principle.title}
+                      </h4>
+
+                      <p
+                        className="text-sm font-semibold mb-3 leading-snug"
+                        style={{ color: 'var(--primary-accent)' }}
+                      >
+                        {principle.description}
+                      </p>
+
+                      <p
+                        className="text-xs sm:text-sm font-normal leading-relaxed"
+                        style={{ color: 'var(--text-secondary)' }}
+                      >
+                        {principle.detail}
+                      </p>
                     </div>
-                    <h4 className="text-xl font-bold text-white mb-2">{principle.title}</h4>
-                    <p className="text-sm font-medium text-slate-200 mb-3 leading-snug">
-                      {principle.description}
-                    </p>
-                    <p className="text-xs text-slate-400 font-light leading-relaxed">
-                      {principle.detail}
-                    </p>
+
+                    <div className="pt-3 border-t flex items-center justify-between text-xs font-mono" style={{ borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }}>
+                      <span>Core Foundation</span>
+                      <span className="font-bold" style={{ color: 'var(--primary-accent)' }}>
+                        0{idx + 1} / 0{totalPrinciples}
+                      </span>
+                    </div>
                   </div>
-                </motion.div>
+                </div>
               );
             })}
+          </div>
+
+          {/* Dots Indicator */}
+          <div className="flex items-center justify-center gap-2 mt-4">
+            {PHILOSOPHY_PRINCIPLES.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => setActiveProcessIdx(idx)}
+                className="h-2 rounded-full transition-all duration-300 cursor-pointer"
+                style={{
+                  width: activeProcessIdx === idx ? '32px' : '8px',
+                  backgroundColor: activeProcessIdx === idx ? 'var(--primary-accent)' : 'var(--border-color)',
+                }}
+                aria-label={`Go to principle ${idx + 1}`}
+              />
+            ))}
           </div>
         </div>
       </div>

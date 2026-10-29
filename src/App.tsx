@@ -35,7 +35,13 @@ export default function App() {
   };
 
   return (
-    <main className="w-full min-h-screen bg-[#0A0B10] text-[#E2E8F0] selection:bg-[#38BDF8]/20 selection:text-[#38BDF8] overflow-x-clip relative">
+    <main
+      className="w-full min-h-screen overflow-x-clip relative transition-colors duration-300"
+      style={{
+        backgroundColor: 'var(--bg-page)',
+        color: 'var(--text-primary)',
+      }}
+    >
       {/* 1. Navigation System */}
       <Navbar
         onOpenContact={handleOpenContact}
@@ -75,19 +81,41 @@ export default function App() {
             type="button"
             onClick={() => setIsChatOpen(true)}
             aria-label="Open Studio Copilot powered by Gemini"
-            className="group relative flex items-center gap-3 px-4 py-3 rounded-full bg-[#121624] border border-sky-500/40 text-white shadow-2xl hover:border-sky-400 hover:shadow-sky-500/20 active:scale-95 transition-all cursor-pointer backdrop-blur-md"
+            className="group relative flex items-center gap-3 px-4 py-3 rounded-full border shadow-2xl active:scale-95 transition-all cursor-pointer backdrop-blur-md"
+            style={{
+              backgroundColor: 'var(--surface-card)',
+              borderColor: 'var(--border-color)',
+              color: 'var(--text-primary)',
+              boxShadow: 'var(--card-shadow)',
+            }}
           >
             <span className="relative flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+              <span
+                className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                style={{ backgroundColor: 'var(--primary-accent)' }}
+              />
+              <span
+                className="relative inline-flex rounded-full h-3 w-3"
+                style={{ backgroundColor: 'var(--primary-accent)' }}
+              />
             </span>
 
             <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-sky-400 group-hover:rotate-12 transition-transform" />
-              <span className="text-xs font-semibold tracking-wide">Studio Copilot</span>
+              <Sparkles
+                className="w-4 h-4 group-hover:rotate-12 transition-transform"
+                style={{ color: 'var(--primary-accent)' }}
+              />
+              <span className="text-xs font-bold tracking-wide">Studio Copilot</span>
             </div>
 
-            <span className="hidden sm:inline-block text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">
+            <span
+              className="hidden sm:inline-block text-[10px] uppercase font-mono px-1.5 py-0.5 rounded border font-semibold"
+              style={{
+                backgroundColor: 'var(--badge-bg)',
+                borderColor: 'var(--border-color)',
+                color: 'var(--primary-accent)',
+              }}
+            >
               Gemini
             </span>
           </button>
